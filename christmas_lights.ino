@@ -16,25 +16,51 @@ void setup() {
 	Serial.println("resetting");
 	LEDS.addLeds<WS2812,DATA_PIN,RGB>(leds,NUM_LEDS);
 	LEDS.setBrightness(84);
+
+        for (int i = 0; i < NUM_LEDS; i++){
+              //randLight = random(NUM_LEDS);
+              leds[i].setRGB(20,10,10);  // setRGB functions works by setting
+              
+              //brightness = leds[randLight].getLuma();
+        }
 }
 
-int glow;
 int plus_min;
+int randLight;
+int glow = 30;
+int brightness = 0;
+int fadeAmount = 5;
 
-void loop() { 
-	for(int i = 0; i < NUM_LEDS; i++) {
-                glow = leds[i].r;
+void loop()
+{  
+  /*brightness = brightness + fadeAmount;
+  
+  // reverse the direction of the fading at the ends of the fade:
+  if(brightness == 0 || brightness == 255)
+  {
+    fadeAmount = -fadeAmount ;
+  }/**/   
+  
+  for (int i = 0; i < NUM_LEDS/6; i++){
+    randLight = random(NUM_LEDS);
+    //leds[randLight].setRGB(200,110,10);  // setRGB functions works by setting
+    
+    brightness = leds[randLight].getLuma();
+    
+  
+    // reverse the direction of the fading at the ends of the fade:
+    if(brightness > 150)
+    {
+      brightness = brightness - fadeAmount;
+    } 
+    else {
+      brightness = brightness + fadeAmount;
+    }
+    
+    leds[randLight].fadeLightBy();
+    FastLED.show();
 
-                plus_min = random(1);
+  }
 
-                if (plus_min == 1){
-                  glow = glow + random(3);
-                }
-                else {
-                  glow = glow - random(3);
-                }
-                leds[i].setRGB( glow + 5, glow, glow);
-	}
-	FastLED.show(); 
-        delay(50);
+  delay(30);  // This delay sets speed of the fade. I usually do from 5-75 but you can always go higher.
 }
