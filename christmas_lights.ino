@@ -19,7 +19,7 @@ void setup() {
 
         for (int i = 0; i < NUM_LEDS; i++){
               //randLight = random(NUM_LEDS);
-              leds[i].setRGB(20,10,10);  // setRGB functions works by setting
+              leds[i].setRGB(200,100,140);  // setRGB functions works by setting
               
               //brightness = leds[randLight].getLuma();
         }
@@ -32,35 +32,20 @@ int brightness = 0;
 int fadeAmount = 5;
 
 void loop()
-{  
-  /*brightness = brightness + fadeAmount;
+{
+   for(int i = 0; i < NUM_LEDS/8; i++ )
+   {
+     randLight = random(NUM_LEDS);
+     //leds[randLight] /= 2;
+     leds[randLight].setHSV(35, 200, random(150));
+   }
+   FastLED.show();
   
+  brightness = brightness + fadeAmount;
   // reverse the direction of the fading at the ends of the fade:
-  if(brightness == 0 || brightness == 255)
+  if(brightness == 0 || brightness == 250)
   {
     fadeAmount = -fadeAmount ;
-  }/**/   
-  
-  for (int i = 0; i < NUM_LEDS/6; i++){
-    randLight = random(NUM_LEDS);
-    //leds[randLight].setRGB(200,110,10);  // setRGB functions works by setting
-    
-    brightness = leds[randLight].getLuma();
-    
-  
-    // reverse the direction of the fading at the ends of the fade:
-    if(brightness > 150)
-    {
-      brightness = brightness - fadeAmount;
-    } 
-    else {
-      brightness = brightness + fadeAmount;
-    }
-    
-    leds[randLight].fadeLightBy();
-    FastLED.show();
-
-  }
-
+  }   
   delay(30);  // This delay sets speed of the fade. I usually do from 5-75 but you can always go higher.
 }
