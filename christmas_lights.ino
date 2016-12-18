@@ -74,7 +74,7 @@ void loop()
      if (glow < 30) {
        glow = glow + random(10);  // Brightness must increase
      }
-     else if (glow < 100) {
+     else if (glow <= 150) {
        glow = random(glow - 10, glow + 10);  // Brightness can go either way
      }
      else if (glow > 150) {
