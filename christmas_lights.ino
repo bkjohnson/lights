@@ -15,7 +15,7 @@ class Bulb : public CRGB
    public:
    Bulb()
    {
-     setHSV(35,200,5);
+     setHSV(35,200,50);
    }
 
    void setVal(int val)
@@ -53,6 +53,7 @@ void setup() {
               leds[i] = Bulb();
               brightness[i] = 5;
         }
+        FastLED.show();
 }
 
 int randLight;
