@@ -68,23 +68,25 @@ void loop()
      changers[i] = random(NUM_LEDS);
    }
 
-   // Update each of the chosen LEDs
-   for (int j = 0; j < NUM_LEDS/15; j++){
-     glow = brightness[changers[j]];
+   for (int k = 0; k < 50; k++){
+     // Update each of the chosen LEDs
+     for (int j = 0; j < NUM_LEDS/15; j++){
+       glow = brightness[changers[j]];
 
-     if (glow < 30) {
-       glow = glow + random(10);  // Brightness must increase
-     }
-     else if (glow <= 150) {
-       glow = random(glow - 10, glow + 10);  // Brightness can go either way
-     }
-     else if (glow > 150) {
-       glow = random(glow - 10, glow);  // Brightness must decrease
-     }
+       if (glow < 60) {
+         glow = glow + 1;  // Brightness must increase
+       }
+       else if (glow <= 150) {
+         glow = glow + 1;
+       }
+       else if (glow > 150) {
+         glow = glow - 1;  // Brightness must decrease
+       }
 
-     leds[changers[j]].setVal(glow);
-     brightness[changers[j]] = glow;
-   }
+       leds[changers[j]].setVal(glow);
+       brightness[changers[j]] = glow;
+     }
    delay(5);
    FastLED.show();
+   }
 }
