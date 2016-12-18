@@ -41,6 +41,7 @@ class Bulb : public CRGB
 
 // Define the array of leds
 Bulb leds[NUM_LEDS];
+int brightness[NUM_LEDS];
 
 void setup() { 
 	Serial.begin(57600);
@@ -50,16 +51,35 @@ void setup() {
 
         for (int i = 0; i < NUM_LEDS; i++){
               leds[i] = Bulb();
+              brightness[i] = 5;
         }
 }
 
 int randLight;
+int glow;
 
 void loop()
 {
    for(int i = 0; i < NUM_LEDS/15; i++ )
    {
      randLight = random(NUM_LEDS);
-     leds[randLight].activate();
+
+     glow = brightness[randLight];
+
+     if (glow < 30) {
+       glow = glow + random(10);
+     }
+     else if (glow < 100) {
+       glow = random(glow - 10, glow + 10);
+     }
+     else if (glow > 150) {
+       glow = random(glow - 50, 150);
+     }
+
+     leds[randLight].setVal(glow);
+     brightness[randLight] = glow;
+
+     delay(5);
+     FastLED.show();
    }
 }
