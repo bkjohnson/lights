@@ -8,8 +8,25 @@
 // ground, and power), like the LPD8806, define both DATA_PIN and CLOCK_PIN
 #define DATA_PIN 11
 
+
+class Bulb : public CRGB
+{
+
+   public:
+   Bulb()
+   {
+     setHSV(35,200,5);
+   }
+
+   void setVal(int val)
+   {
+     setHSV(35,200,val);
+   }
+
+};
+
 // Define the array of leds
-CRGB leds[NUM_LEDS];
+Bulb leds[NUM_LEDS];
 
 void setup() { 
 	Serial.begin(57600);
@@ -18,7 +35,7 @@ void setup() {
 	LEDS.setBrightness(84);
 
         for (int i = 0; i < NUM_LEDS; i++){
-              leds[i].setHSV(35,200,5);  // setRGB functions works by setting
+              leds[i] = Bulb();
         }
 }
 
@@ -29,7 +46,7 @@ void loop()
    for(int i = 0; i < NUM_LEDS/8; i++ )
    {
      randLight = random(NUM_LEDS);
-     leds[randLight].setHSV(35, 200, random(150));
+     leds[randLight].setVal(random(150));
    }
    FastLED.show();
 
