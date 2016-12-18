@@ -18,34 +18,20 @@ void setup() {
 	LEDS.setBrightness(84);
 
         for (int i = 0; i < NUM_LEDS; i++){
-              //randLight = random(NUM_LEDS);
-              leds[i].setRGB(200,100,140);  // setRGB functions works by setting
-              
-              //brightness = leds[randLight].getLuma();
+              leds[i].setHSV(35,200,5);  // setRGB functions works by setting
         }
 }
 
-int plus_min;
 int randLight;
-int glow = 30;
-int brightness = 0;
-int fadeAmount = 5;
 
 void loop()
 {
    for(int i = 0; i < NUM_LEDS/8; i++ )
    {
      randLight = random(NUM_LEDS);
-     //leds[randLight] /= 2;
      leds[randLight].setHSV(35, 200, random(150));
    }
    FastLED.show();
-  
-  brightness = brightness + fadeAmount;
-  // reverse the direction of the fading at the ends of the fade:
-  if(brightness == 0 || brightness == 250)
-  {
-    fadeAmount = -fadeAmount ;
-  }   
+
   delay(30);  // This delay sets speed of the fade. I usually do from 5-75 but you can always go higher.
 }
