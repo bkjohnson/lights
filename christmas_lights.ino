@@ -57,29 +57,33 @@ void setup() {
 
 int randLight;
 int glow;
+int changers[NUM_LEDS/15];
 
 void loop()
 {
+   // Pick which LEDs will be updated
    for(int i = 0; i < NUM_LEDS/15; i++ )
    {
-     randLight = random(NUM_LEDS);
+     changers[i] = random(NUM_LEDS);
+   }
 
-     glow = brightness[randLight];
+   // Update each of the chosen LEDs
+   for (int j = 0; j < NUM_LEDS/15; j++){
+     glow = brightness[changers[j]];
 
      if (glow < 30) {
-       glow = glow + random(10);
+       glow = glow + random(10);  // Brightness must increase
      }
      else if (glow < 100) {
-       glow = random(glow - 10, glow + 10);
+       glow = random(glow - 10, glow + 10);  // Brightness can go either way
      }
      else if (glow > 150) {
-       glow = random(glow - 50, 150);
+       glow = random(glow - 10, glow);  // Brightness must decrease
      }
 
-     leds[randLight].setVal(glow);
-     brightness[randLight] = glow;
-
-     delay(5);
-     FastLED.show();
+     leds[changers[j]].setVal(glow);
+     brightness[changers[j]] = glow;
    }
+   delay(5);
+   FastLED.show();
 }
