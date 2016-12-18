@@ -23,6 +23,20 @@ class Bulb : public CRGB
      setHSV(35,200,val);
    }
 
+   void activate()
+   {
+     for (int i = 50; i < 100; i++){
+       setHSV(35,200,i + 100);
+       delay(5);
+       FastLED.show();
+     }
+     for (int i = 50; i > 0; i--){
+       setHSV(35,200,i + 100);
+       delay(5);
+       FastLED.show();
+     }
+   }
+
 };
 
 // Define the array of leds
@@ -46,9 +60,6 @@ void loop()
    for(int i = 0; i < NUM_LEDS/15; i++ )
    {
      randLight = random(NUM_LEDS);
-     leds[randLight].setVal(random(150));
+     leds[randLight].activate();
    }
-   FastLED.show();
-
-  delay(60);  // This delay sets speed of the fade. I usually do from 5-75 but you can always go higher.
 }
