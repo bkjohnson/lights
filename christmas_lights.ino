@@ -63,6 +63,8 @@ int randLight;
 int glow;
 int changers[NUM_TO_CHANGE];
 int dim = 0; // treat this as a boolean indicating whether or not to dim the light
+int brightness_min = 60;
+int brightness_max = 150;
 
 void loop()
 {
@@ -79,10 +81,10 @@ void loop()
      for (int j = 0; j < NUM_TO_CHANGE; j++){
        glow = brightness[changers[j]];
 
-       if (glow < 60) {
+       if (glow < brightness_min) {
          glow = glow + 1;  // Brightness must increase
        }
-       else if (glow <= 150) {
+       else if (glow <= brightness_max) {
          if (dim == 0){
            glow = glow + 1;
          }
@@ -91,7 +93,7 @@ void loop()
          }
 
        }
-       else if (glow > 150) {
+       else if (glow > brightness_max) {
          glow = glow - 1;  // Brightness must decrease
        }
 
