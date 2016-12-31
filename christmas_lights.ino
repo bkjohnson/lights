@@ -59,6 +59,7 @@ void setup() {
 int randLight;
 int glow;
 int changers[NUM_LEDS/15];
+int dim = 0; // treat this as a boolean indicating whether or not to dim the light
 
 void loop()
 {
@@ -68,6 +69,7 @@ void loop()
      changers[i] = random(NUM_LEDS);
    }
 
+   dim = random(2);
    for (int k = 0; k < 50; k++){
      // Update each of the chosen LEDs
      for (int j = 0; j < NUM_LEDS/15; j++){
@@ -77,7 +79,13 @@ void loop()
          glow = glow + 1;  // Brightness must increase
        }
        else if (glow <= 150) {
-         glow = glow + 1;
+         if (dim == 0){
+           glow = glow + 1;
+         }
+         else {
+           glow = glow - 1;
+         }
+
        }
        else if (glow > 150) {
          glow = glow - 1;  // Brightness must decrease
