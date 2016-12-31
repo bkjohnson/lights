@@ -4,7 +4,7 @@
 #define NUM_LEDS 50
 
 // Must be < NUM_LEDS
-#define NUM_TO_CHANGE 5
+#define NUM_TO_CHANGE 7
 
 // For led chips like Neopixels, which have a data line, ground, and power, you just
 // need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
@@ -112,7 +112,7 @@ void loop()
        brightness[changers[j]] = glow;
        time[changers[j]]--;
      }
-   delay(5);
+   delay(15);
    FastLED.show();  // Show lights after all have been updated for this round
    }
 }
