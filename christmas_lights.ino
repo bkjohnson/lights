@@ -3,6 +3,9 @@
 // How many leds in your strip?
 #define NUM_LEDS 50
 
+// Must be < NUM_LEDS
+#define NUM_TO_CHANGE 5
+
 // For led chips like Neopixels, which have a data line, ground, and power, you just
 // need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
 // ground, and power), like the LPD8806, define both DATA_PIN and CLOCK_PIN
@@ -58,21 +61,22 @@ void setup() {
 
 int randLight;
 int glow;
-int changers[NUM_LEDS/15];
+int changers[NUM_TO_CHANGE];
 int dim = 0; // treat this as a boolean indicating whether or not to dim the light
 
 void loop()
 {
    // Pick which LEDs will be updated
-   for(int i = 0; i < NUM_LEDS/15; i++ )
+   for(int i = 0; i < NUM_TO_CHANGE; i++ )
    {
      changers[i] = random(NUM_LEDS);
+     time[changers[i]] = 50;
    }
 
    dim = random(2);
    for (int k = 0; k < 50; k++){
      // Update each of the chosen LEDs
-     for (int j = 0; j < NUM_LEDS/15; j++){
+     for (int j = 0; j < NUM_TO_CHANGE; j++){
        glow = brightness[changers[j]];
 
        if (glow < 60) {
