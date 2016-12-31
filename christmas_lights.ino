@@ -45,6 +45,7 @@ class Bulb : public CRGB
 // Define the array of leds
 Bulb leds[NUM_LEDS];
 int brightness[NUM_LEDS];
+int rate[NUM_TO_CHANGE];
 
 void setup() { 
 	Serial.begin(57600);
@@ -55,6 +56,10 @@ void setup() {
         for (int i = 0; i < NUM_LEDS; i++){
               leds[i] = Bulb();
               brightness[i] = 5;
+        }
+
+        for (int j = 0; j < NUM_TO_CHANGE; j++){
+             rate[j] = 1 + (j % 4); // We never want our rate to be faster than 3
         }
         FastLED.show();
 }
@@ -78,28 +83,29 @@ void loop()
    for (int k = 0; k < 50; k++){
      // Update each of the chosen LEDs
      for (int j = 0; j < NUM_TO_CHANGE; j++){
+
        glow = brightness[changers[j]];
 
        if (glow < brightness_min) {
-         glow = glow + 1;  // Brightness must increase
+         glow = glow + rate[j];  // Brightness must increase
        }
        else if (glow <= brightness_max) {
          if (dim == 0){
-           glow = glow + 1;
+           glow = glow + rate[j];
          }
          else {
-           glow = glow - 1;
+           glow = glow - rate[j];
          }
 
        }
        else if (glow > brightness_max) {
-         glow = glow - 1;  // Brightness must decrease
+         glow = glow - rate[j];  // Brightness must decrease
        }
 
        leds[changers[j]].setVal(glow);
        brightness[changers[j]] = glow;
      }
    delay(5);
-   FastLED.show();
+   FastLED.show();  // Show lights after all have been updated for this round
    }
 }
