@@ -72,7 +72,6 @@ void loop()
    for(int i = 0; i < NUM_TO_CHANGE; i++ )
    {
      changers[i] = random(NUM_LEDS);
-     time[changers[i]] = 50;
    }
 
    dim = random(2);
