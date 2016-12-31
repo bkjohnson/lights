@@ -69,7 +69,7 @@ int glow;
 int changers[NUM_TO_CHANGE];
 int dim = 0; // treat this as a boolean indicating whether or not to dim the light
 int brightness_min = 60;
-int brightness_max = 150;
+int brightness_max = 250;
 
 void loop()
 {
@@ -80,7 +80,7 @@ void loop()
    }
 
    dim = random(2);
-   for (int k = 0; k < 50; k++){
+   for (int k = 0; k < 100; k++){
      // Update each of the chosen LEDs
      for (int j = 0; j < NUM_TO_CHANGE; j++){
 
