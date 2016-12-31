@@ -46,6 +46,7 @@ class Bulb : public CRGB
 Bulb leds[NUM_LEDS];
 int brightness[NUM_LEDS];
 int rate[NUM_TO_CHANGE];
+int time[NUM_LEDS];
 
 void setup() { 
 	Serial.begin(57600);
@@ -56,6 +57,7 @@ void setup() {
         for (int i = 0; i < NUM_LEDS; i++){
               leds[i] = Bulb();
               brightness[i] = 5;
+              time[i] = NUM_LEDS;
         }
 
         for (int j = 0; j < NUM_TO_CHANGE; j++){
@@ -80,9 +82,13 @@ void loop()
    }
 
    dim = random(2);
-   for (int k = 0; k < 100; k++){
+   for (int k = 0; k < 150; k++){
      // Update each of the chosen LEDs
      for (int j = 0; j < NUM_TO_CHANGE; j++){
+       if (time[changers[j]] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
+           time[changers[j]] = random(200);
+           changers[j] = random(NUM_LEDS);
+       }
 
        glow = brightness[changers[j]];
 
@@ -104,6 +110,7 @@ void loop()
 
        leds[changers[j]].setVal(glow);
        brightness[changers[j]] = glow;
+       time[changers[j]]--;
      }
    delay(5);
    FastLED.show();  // Show lights after all have been updated for this round
