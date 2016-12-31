@@ -61,7 +61,7 @@ void setup() {
         }
 
         for (int j = 0; j < NUM_TO_CHANGE; j++){
-             rate[j] = 1 + (j % 4); // We never want our rate to be faster than 3
+             rate[j] = 1 + (j % 6); // We never want our rate to be faster than 5
         }
         FastLED.show();
 }
