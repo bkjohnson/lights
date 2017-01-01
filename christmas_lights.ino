@@ -73,17 +73,19 @@ int glow;
 int dim = 0; // treat this as a boolean indicating whether or not to dim the light
 int brightness_min = 80;
 int brightness_max = 250;
+int bulbIndex;
 
 void loop()
 {
      for (int j = 0; j < NUM_TO_CHANGE; j++){
+       bulbIndex = changers[j];
        if (time[changers[j]] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
            dim = random(2);
-           time[changers[j]] = random(150);
+           time[bulbIndex] = random(150);
            changers[j] = random(NUM_LEDS);
        }
 
-       glow = brightness[changers[j]];
+       glow = brightness[bulbIndex];
 
        if (glow < brightness_min) {
          glow = glow + rate[j];  // Brightness must increase
@@ -101,9 +103,9 @@ void loop()
          glow = glow - rate[j];  // Brightness must decrease
        }
 
-       leds[changers[j]].setVal(glow);
-       brightness[changers[j]] = glow;
-       time[changers[j]]--;
+       leds[bulbIndex].setVal(glow);
+       brightness[bulbIndex] = glow;
+       time[bulbIndex]--;
      }
    delay(random(10,30));
    FastLED.show();  // Show lights after all have been updated for this round
