@@ -73,40 +73,39 @@ void setup() {
 int randLight;
 int glow;
 int brightness_min = 80;
-int brightness_max = 250;
-int bulbIndex;
+int brightness_max = 230;
+int changeRate;
 
 void loop()
 {
-     for (int j = 0; j < NUM_TO_CHANGE; j++){
-       bulbIndex = changers[j];
-       if (time[changers[j]] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
-           dim[bulbIndex] = random(2);
-           time[bulbIndex] = random(150);
-           changers[j] = random(NUM_LEDS);
+     for (int j = 0; j < NUM_LEDS; j++){
+       changeRate = random(8);
+       if (time[j] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
+           dim[j] = (dim[j] + 1) % 2;
+           time[j] = random(150);
        }
 
-       glow = brightness[bulbIndex];
+       glow = brightness[j];
 
        if (glow < brightness_min) {
-         glow = glow + rate[j];  // Brightness must increase
+         glow = glow + changeRate;  // Brightness must increase
        }
        else if (glow <= brightness_max) {
-         if (dim[bulbIndex] == 0){
-           glow = glow + rate[j];
+         if (dim[j] == 0){
+           glow = glow + changeRate;
          }
          else {
-           glow = glow - rate[j];
+           glow = glow - changeRate;
          }
 
        }
        else if (glow > brightness_max) {
-         glow = glow - rate[j];  // Brightness must decrease
+         glow = glow - changeRate;  // Brightness must decrease
        }
 
-       leds[bulbIndex].setVal(glow);
-       brightness[bulbIndex] = glow;
-       time[bulbIndex]--;
+       leds[j].setVal(glow);
+       brightness[j] = glow;
+       time[j]--;
      }
    delay(random(10,30));
    FastLED.show();  // Show lights after all have been updated for this round
