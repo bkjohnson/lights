@@ -107,7 +107,7 @@ void loop()
        brightness[changers[j]] = glow;
        time[changers[j]]--;
      }
-   delay(20);
+   delay(random(10,30));
    FastLED.show();  // Show lights after all have been updated for this round
    }
 }
