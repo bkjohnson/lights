@@ -62,7 +62,7 @@ void setup() {
         }
 
         for (int j = 0; j < NUM_TO_CHANGE; j++){
-             rate[j] = 1 + (j % 6); // We never want our rate to be faster than 5
+             rate[j] = 1 + (j % 8); // We never want our rate to be faster than 7
              changers[j] = random(NUM_LEDS);  // Pick which LEDs will be updated
         }
         FastLED.show();
@@ -71,17 +71,17 @@ void setup() {
 int randLight;
 int glow;
 int dim = 0; // treat this as a boolean indicating whether or not to dim the light
-int brightness_min = 60;
+int brightness_min = 80;
 int brightness_max = 250;
 
 void loop()
 {
    dim = random(2);
-   for (int k = 0; k < 150; k++){
+   for (int k = 0; k < 80; k++){
      // Update each of the chosen LEDs
      for (int j = 0; j < NUM_TO_CHANGE; j++){
        if (time[changers[j]] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
-           time[changers[j]] = random(100);
+           time[changers[j]] = random(50);
            changers[j] = random(NUM_LEDS);
        }
 
@@ -107,7 +107,7 @@ void loop()
        brightness[changers[j]] = glow;
        time[changers[j]]--;
      }
-   delay(15);
+   delay(20);
    FastLED.show();  // Show lights after all have been updated for this round
    }
 }
