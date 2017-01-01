@@ -48,6 +48,7 @@ int brightness[NUM_LEDS];
 int rate[NUM_TO_CHANGE];
 int time[NUM_LEDS];
 int changers[NUM_TO_CHANGE];
+int dim[NUM_LEDS];
 
 void setup() { 
 	Serial.begin(57600);
@@ -59,6 +60,7 @@ void setup() {
               leds[i] = Bulb();
               brightness[i] = 5;
               time[i] = NUM_LEDS;
+              dim[i] = 0;
         }
 
         for (int j = 0; j < NUM_TO_CHANGE; j++){
@@ -70,7 +72,6 @@ void setup() {
 
 int randLight;
 int glow;
-int dim = 0; // treat this as a boolean indicating whether or not to dim the light
 int brightness_min = 80;
 int brightness_max = 250;
 int bulbIndex;
@@ -80,7 +81,7 @@ void loop()
      for (int j = 0; j < NUM_TO_CHANGE; j++){
        bulbIndex = changers[j];
        if (time[changers[j]] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
-           dim = random(2);
+           dim[bulbIndex] = random(2);
            time[bulbIndex] = random(150);
            changers[j] = random(NUM_LEDS);
        }
@@ -91,7 +92,7 @@ void loop()
          glow = glow + rate[j];  // Brightness must increase
        }
        else if (glow <= brightness_max) {
-         if (dim == 0){
+         if (dim[bulbIndex] == 0){
            glow = glow + rate[j];
          }
          else {
