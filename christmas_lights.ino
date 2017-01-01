@@ -76,12 +76,10 @@ int brightness_max = 250;
 
 void loop()
 {
-   dim = random(2);
-   for (int k = 0; k < 80; k++){
-     // Update each of the chosen LEDs
      for (int j = 0; j < NUM_TO_CHANGE; j++){
        if (time[changers[j]] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
-           time[changers[j]] = random(50);
+           dim = random(2);
+           time[changers[j]] = random(150);
            changers[j] = random(NUM_LEDS);
        }
 
@@ -109,5 +107,4 @@ void loop()
      }
    delay(random(10,30));
    FastLED.show();  // Show lights after all have been updated for this round
-   }
 }
