@@ -3,9 +3,6 @@
 // How many leds in your strip?
 #define NUM_LEDS 50
 
-// Must be < NUM_LEDS
-#define NUM_TO_CHANGE 7
-
 // For led chips like Neopixels, which have a data line, ground, and power, you just
 // need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
 // ground, and power), like the LPD8806, define both DATA_PIN and CLOCK_PIN
@@ -45,9 +42,7 @@ class Bulb : public CRGB
 // Define the array of leds
 Bulb leds[NUM_LEDS];
 int brightness[NUM_LEDS];
-int rate[NUM_TO_CHANGE];
 int time[NUM_LEDS];
-int changers[NUM_TO_CHANGE];
 int dim[NUM_LEDS];
 
 void setup() { 
@@ -63,14 +58,9 @@ void setup() {
               dim[i] = 0;
         }
 
-        for (int j = 0; j < NUM_TO_CHANGE; j++){
-             rate[j] = 1 + (j % 8); // We never want our rate to be faster than 7
-             changers[j] = random(NUM_LEDS);  // Pick which LEDs will be updated
-        }
         FastLED.show();
 }
 
-int randLight;
 int glow;
 int brightness_min = 80;
 int brightness_max = 230;
