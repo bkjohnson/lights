@@ -69,10 +69,10 @@ int changeRate;
 void loop()
 {
      for (int j = 0; j < NUM_LEDS; j++){
-       changeRate = random(8);
+       changeRate = random(7);
        if (time[j] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
            dim[j] = (dim[j] + 1) % 2;
-           time[j] = random(150);
+           time[j] = random(50, 200);
        }
 
        glow = brightness[j];
@@ -97,6 +97,6 @@ void loop()
        brightness[j] = glow;
        time[j]--;
      }
-   delay(random(10,30));
+   delay(random(15,30));
    FastLED.show();  // Show lights after all have been updated for this round
 }
