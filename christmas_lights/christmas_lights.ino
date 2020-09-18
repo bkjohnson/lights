@@ -33,7 +33,7 @@ class Bulb : public CRGB
 Bulb leds[NUM_LEDS];
 int brightness[NUM_LEDS];
 int time[NUM_LEDS];
-int dim[NUM_LEDS];
+bool dim[NUM_LEDS];
 
 void setup() {
   Serial.begin(57600);
@@ -43,7 +43,7 @@ void setup() {
   for (int i = 0; i < NUM_LEDS; i++) {
     leds[i] = Bulb();
     time[i] = NUM_LEDS;
-    dim[i] = 0;
+    dim[i] = false;
   }
 
   FastLED.show();
@@ -80,11 +80,11 @@ void loop()
   for (int j = 0; j < NUM_LEDS; j++) {
     changeRate = random(7);
     if (time[j] <= 0) { // This bulb has run out of time, so reset it and choose a new bulb
-      dim[j] = (dim[j] + 1) % 2;
+      dim[j] = !dim[j];
       time[j] = random(50, 200);
     }
 
-    glow = getGlowValue(brightness[j], changeRate, dim[j] == 0);
+    glow = getGlowValue(brightness[j], changeRate, dim[j]);
 
     leds[j].setVal(glow);
     brightness[j] = glow;
