@@ -78,7 +78,7 @@ int getGlowValue(int currentGlow, int changeRate, bool isDimming) {
 void loop()
 {
   for (int j = 0; j < NUM_LEDS; j++) {
-    changeRate = random(7);
+    changeRate = random(3);
     if (time[j] <= 0) { // This bulb has run out of time, so reset it and choose a new bulb
       dim[j] = !dim[j];
       time[j] = random(50, 200);
@@ -90,6 +90,5 @@ void loop()
     brightness[j] = glow;
     time[j]--;
   }
-  delay(random(15, 30));
   FastLED.show();  // Show lights after all have been updated for this round
 }
