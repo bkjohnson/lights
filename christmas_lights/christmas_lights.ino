@@ -8,6 +8,12 @@
 // ground, and power), like the LPD8806, define both DATA_PIN and CLOCK_PIN
 #define DATA_PIN 11
 
+// A lower bound representing where the target brightness should be
+#define BRIGHTNESS_MIN 80
+
+// An upper bound representing where the target brightness should be
+#define BRIGHTNESS_MAX 230
+
 
 class Bulb : public CRGB
 {
@@ -44,8 +50,6 @@ void setup() {
 }
 
 int glow;
-int brightness_min = 80;
-int brightness_max = 230;
 int changeRate;
 
 void loop()
@@ -59,10 +63,10 @@ void loop()
 
     glow = brightness[j];
 
-    if (glow < brightness_min) {
+    if (glow < BRIGHTNESS_MIN) {
       glow = glow + changeRate;  // Brightness must increase
     }
-    else if (glow <= brightness_max) {
+    else if (glow <= BRIGHTNESS_MAX) {
       if (dim[j] == 0) {
         glow = glow + changeRate;
       }
@@ -71,7 +75,7 @@ void loop()
       }
 
     }
-    else if (glow > brightness_max) {
+    else if (glow > BRIGHTNESS_MAX) {
       glow = glow - changeRate;  // Brightness must decrease
     }
 
