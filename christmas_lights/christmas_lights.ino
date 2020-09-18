@@ -11,18 +11,16 @@
 
 class Bulb : public CRGB
 {
+  public:
+    Bulb()
+    {
+      setHSV(35, 200, 50);
+    }
 
-   public:
-   Bulb()
-   {
-     setHSV(35,200,50);
-   }
-
-   void setVal(int val)
-   {
-     setHSV(35,200,val);
-   }
-
+    void setVal(int val)
+    {
+      setHSV(35, 200, val);
+    }
 };
 
 // Define the array of leds
@@ -31,20 +29,19 @@ int brightness[NUM_LEDS];
 int time[NUM_LEDS];
 int dim[NUM_LEDS];
 
-void setup() { 
+void setup() {
   Serial.begin(57600);
   Serial.println("resetting");
-  LEDS.addLeds<WS2812,DATA_PIN,RGB>(leds,NUM_LEDS);
+  LEDS.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
   LEDS.setBrightness(84);
 
-        for (int i = 0; i < NUM_LEDS; i++){
-              leds[i] = Bulb();
-              brightness[i] = 5;
-              time[i] = NUM_LEDS;
-              dim[i] = 0;
-        }
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = Bulb();
+    time[i] = NUM_LEDS;
+    dim[i] = 0;
+  }
 
-        FastLED.show();
+  FastLED.show();
 }
 
 int glow;
@@ -54,35 +51,35 @@ int changeRate;
 
 void loop()
 {
-     for (int j = 0; j < NUM_LEDS; j++){
-       changeRate = random(7);
-       if (time[j] <= 0){  // This bulb has run out of time, so reset it and choose a new bulb
-           dim[j] = (dim[j] + 1) % 2;
-           time[j] = random(50, 200);
-       }
+  for (int j = 0; j < NUM_LEDS; j++) {
+    changeRate = random(7);
+    if (time[j] <= 0) { // This bulb has run out of time, so reset it and choose a new bulb
+      dim[j] = (dim[j] + 1) % 2;
+      time[j] = random(50, 200);
+    }
 
-       glow = brightness[j];
+    glow = brightness[j];
 
-       if (glow < brightness_min) {
-         glow = glow + changeRate;  // Brightness must increase
-       }
-       else if (glow <= brightness_max) {
-         if (dim[j] == 0){
-           glow = glow + changeRate;
-         }
-         else {
-           glow = glow - changeRate;
-         }
+    if (glow < brightness_min) {
+      glow = glow + changeRate;  // Brightness must increase
+    }
+    else if (glow <= brightness_max) {
+      if (dim[j] == 0) {
+        glow = glow + changeRate;
+      }
+      else {
+        glow = glow - changeRate;
+      }
 
-       }
-       else if (glow > brightness_max) {
-         glow = glow - changeRate;  // Brightness must decrease
-       }
+    }
+    else if (glow > brightness_max) {
+      glow = glow - changeRate;  // Brightness must decrease
+    }
 
-       leds[j].setVal(glow);
-       brightness[j] = glow;
-       time[j]--;
-     }
-   delay(random(15,30));
-   FastLED.show();  // Show lights after all have been updated for this round
+    leds[j].setVal(glow);
+    brightness[j] = glow;
+    time[j]--;
+  }
+  delay(random(15, 30));
+  FastLED.show();  // Show lights after all have been updated for this round
 }
