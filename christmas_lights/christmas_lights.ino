@@ -23,8 +23,6 @@ class Bulb : public CRGB
      setHSV(35,200,val);
    }
 
-   }
-
 };
 
 // Define the array of leds
@@ -34,10 +32,10 @@ int time[NUM_LEDS];
 int dim[NUM_LEDS];
 
 void setup() { 
-	Serial.begin(57600);
-	Serial.println("resetting");
-	LEDS.addLeds<WS2812,DATA_PIN,RGB>(leds,NUM_LEDS);
-	LEDS.setBrightness(84);
+  Serial.begin(57600);
+  Serial.println("resetting");
+  LEDS.addLeds<WS2812,DATA_PIN,RGB>(leds,NUM_LEDS);
+  LEDS.setBrightness(84);
 
         for (int i = 0; i < NUM_LEDS; i++){
               leds[i] = Bulb();
