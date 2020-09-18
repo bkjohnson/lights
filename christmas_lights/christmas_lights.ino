@@ -17,15 +17,19 @@
 
 class Bulb : public CRGB
 {
+  const static int hue = 35;
+  const static int saturation = 200;
+
   public:
+
     Bulb()
     {
-      setHSV(35, 200, 50);
+      setHSV(hue, saturation, 50);
     }
 
     void setVal(int val)
     {
-      setHSV(35, 200, val);
+      setHSV(hue, saturation, val);
     }
 };
 
