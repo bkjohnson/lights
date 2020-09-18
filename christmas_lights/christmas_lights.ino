@@ -52,6 +52,29 @@ void setup() {
 int glow;
 int changeRate;
 
+// Decide what the current "glow" value should be
+int getGlowValue(int currentGlow, int changeRate, bool isDimming) {
+  int newGlow;
+
+  if (currentGlow < BRIGHTNESS_MIN) {
+    newGlow = currentGlow + changeRate;
+  }
+  else if (currentGlow <= BRIGHTNESS_MAX) {
+    if (isDimming) {
+      newGlow = currentGlow + changeRate;
+    }
+    else {
+      newGlow = currentGlow - changeRate;
+    }
+  }
+  else if (currentGlow > BRIGHTNESS_MAX) {
+    newGlow = currentGlow - changeRate;
+  }
+
+  return newGlow;
+}
+
+
 void loop()
 {
   for (int j = 0; j < NUM_LEDS; j++) {
@@ -61,23 +84,7 @@ void loop()
       time[j] = random(50, 200);
     }
 
-    glow = brightness[j];
-
-    if (glow < BRIGHTNESS_MIN) {
-      glow = glow + changeRate;  // Brightness must increase
-    }
-    else if (glow <= BRIGHTNESS_MAX) {
-      if (dim[j] == 0) {
-        glow = glow + changeRate;
-      }
-      else {
-        glow = glow - changeRate;
-      }
-
-    }
-    else if (glow > BRIGHTNESS_MAX) {
-      glow = glow - changeRate;  // Brightness must decrease
-    }
+    glow = getGlowValue(brightness[j], changeRate, dim[j] == 0);
 
     leds[j].setVal(glow);
     brightness[j] = glow;
