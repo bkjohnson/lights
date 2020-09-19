@@ -42,15 +42,13 @@ bool dim[NUM_LEDS];
 void setup() {
   Serial.begin(57600);
   Serial.println("resetting");
-  LEDS.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 
   for (int i = 0; i < NUM_LEDS; i++) {
     leds[i] = Bulb();
     time[i] = NUM_LEDS;
     dim[i] = false;
   }
-
-  FastLED.show();
 }
 
 int glow;
