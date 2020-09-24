@@ -51,8 +51,6 @@ void setup() {
   }
 }
 
-int glow;
-int changeRate;
 
 // Decide what the current "glow" value should be
 int getGlowValue(int currentGlow, int changeRate, bool isDimming) {
@@ -79,6 +77,9 @@ int getGlowValue(int currentGlow, int changeRate, bool isDimming) {
 
 void loop()
 {
+  int glow;
+  int changeRate;
+
   for (int j = 0; j < NUM_LEDS; j++) {
     changeRate = random(3);
     if (time[j] <= 0) { // This bulb has run out of time, so reset it and choose a new bulb
