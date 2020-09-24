@@ -17,8 +17,8 @@
 
 class Bulb : public CRGB
 {
-  const static int hue = 35;
-  const static int saturation = 200;
+  const static uint8_t hue = 35;
+  const static uint8_t saturation = 200;
 
   public:
 
